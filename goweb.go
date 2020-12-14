@@ -15,7 +15,7 @@ var UserData map[string]string
 
 func init() {
 	UserData = map[string]string{
-		"test": "test",
+		// "test": "test",
 		"Daniel": "honte511",
 	}
 }
