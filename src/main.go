@@ -1,7 +1,7 @@
 package main
 
 import (
-	// "inwin/routes"
+	"routes"
 	"fmt"
 	// "time"
 )
@@ -41,11 +41,11 @@ func MaxHeapifyBottomUp(in []int) []int {
 }
 
 func main() {
-	// router.SetupRouter()
-	// router := router.SetupRouter()
-	// router.Run(":8888")
-	// c1 := make(chan string)
-    // c2 := make(chan string)
+	router.SetupRouter()
+	router := router.SetupRouter()
+	router.Run(":8888")
+	c1 := make(chan string)
+    c2 := make(chan string)
 
     arr := []int{1, 2, 3, 4, 5, 5, 6, 6, 1, 2, 10, 9, 20}
     fmt.Println(BuildMaxHeap(arr))

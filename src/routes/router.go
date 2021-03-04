@@ -2,7 +2,7 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"inwin/controllers"
+	"controllers"
 )
 
 func SetupRouter() *gin.Engine {
