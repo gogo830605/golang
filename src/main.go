@@ -46,7 +46,7 @@ func main() {
 	s := square{width: 3, height: 4}
 // c := circle{radius: 5}
 
-measure(s)
+// measure(s)
 // measure(s)
 measure(c)
 }
