@@ -1,52 +1,51 @@
 package main
 
 import (
-	"routes"
+	// "routes"
 	"fmt"
+	"math"
 	// "time"
 )
 
-func BuildMaxHeap(in []int) []int {
-	heap := []int{}
-	for _, value := range in {
-		// insert a new node at the bottom
-		heap = append(heap, value)
-		// do heapify to make the new node to right position
-		heap = MaxHeapifyBottomUp(heap)
+	type geometry interface {
+		area() float64
+		perimeter() float64
 	}
-
-	return heap
-}
-
-func MaxHeapifyBottomUp(in []int) []int {
-	// the index of new node, the latest one element in slice
-	newELeIndex := len(in) - 1
-	for {
-		// get the parent node index
-		parentIndex := (newELeIndex+1)/2 - 1
-		// break if the node is to the top of heap
-		if parentIndex < 0 {
-			break
-		}
-		// if parent node < the new node, swap
-		if in[newELeIndex] > in[parentIndex] {
-			in[parentIndex], in[newELeIndex] = in[newELeIndex], in[parentIndex]
-			newELeIndex = parentIndex
-		} else {
-			// if not, break here
-			break
-		}
+	
+	type square struct {
+	width, height float64
 	}
-	return in
-}
+	type circle struct {
+	radius float64
+	}
+	
+	func (s square) area() float64 {
+	return s.width * s.height
+	}
+	func (s square) perimeter() float64 {
+	return 2*s.width + 2*s.height
+	}
+	
+	func (c circle) area() float64 {
+	return math.Pi * c.radius * c.radius
+	}
+	func (c circle) perimeter() float64 {
+	return 2 * math.Pi * c.radius
+	}
+	
+	func measure(g geometry) {
+	fmt.Println(g)
+	fmt.Println(g.area())
+	fmt.Println(g.perimeter())
+	}
 
 func main() {
-	router.SetupRouter()
-	router := router.SetupRouter()
-	router.Run(":8888")
-	c1 := make(chan string)
-    c2 := make(chan string)
+	// router.SetupRouter()
+	// router := router.SetupRouter()
+	// router.Run(":8888")
+	s := square{width: 3, height: 4}
+// c := circle{radius: 5}
 
-    arr := []int{1, 2, 3, 4, 5, 5, 6, 6, 1, 2, 10, 9, 20}
-    fmt.Println(BuildMaxHeap(arr))
+measure(s)
+// measure(c)
 }
