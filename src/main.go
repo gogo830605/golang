@@ -47,6 +47,6 @@ func main() {
 // c := circle{radius: 5}
 
 measure(s)
-measure(s)
+// measure(s)
 measure(c)
 }
