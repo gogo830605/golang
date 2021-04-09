@@ -48,5 +48,5 @@ func main() {
 
 measure(s)
 measure(s)
-measure(c)
+// measure(c)
 }
