@@ -1,52 +1,28 @@
 package main
 
 import (
-	// "routes"
+	"Config"
+	"Models"
 	"fmt"
-	"math"
-	// "time"
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/jinzhu/gorm"
 )
 
-	type geometry interface {
-		area() float64
-		perimeter() float64
-	}
-	
-	type square struct {
-	width, height float64
-	}
-	type circle struct {
-	radius float64
-	}
-	
-	func (s square) area() float64 {
-	return s.width * s.height
-	}
-	func (s square) perimeter() float64 {
-	return 2*s.width + 2*s.height
-	}
-	
-	func (c circle) area() float64 {
-	return math.Pi * c.radius * c.radius
-	}
-	func (c circle) perimeter() float64 {
-	return 2 * math.Pi * c.radius
-	}
-	
-	func measure(g geometry) {
-	fmt.Println(g)
-	fmt.Println(g.area())
-	fmt.Println(g.perimeter())
-	}
+var err error
 
 func main() {
-	// router.SetupRouter()
-	// router := router.SetupRouter()
-	// router.Run(":8888")
-	s := square{width: 3, height: 4}
-// c := circle{radius: 5}
+	Config.DB, err = gorm.Open("mysql", Config.DbURL(Config.BuildDBConfig()))
+	if err != nil {
+		fmt.Println("Status:", err)
+	}
+	defer Config.DB.Close()
 
-measure(s)
-measure(s)
-measure(c)
+	var CashSurplusRule []Models.CashSurplusRule
+	err := Models.GetRules(&CashSurplusRule)
+	if err != nil {
+		return
+	}
+	//fmt.Printf("Data:%+v:", CashSurplusRule)
+	//router := Router.SetupRouter()
+	//router.Run(":8888")
 }
