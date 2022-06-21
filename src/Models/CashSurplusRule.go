@@ -2,54 +2,70 @@ package Models
 
 import (
 	"Config"
-	"fmt"
-	_ "github.com/go-sql-driver/mysql"
+	"Entities"
+	"github.com/gin-gonic/gin"
 )
 
 type CashSurplusRule struct {
-	Id     int
-	SiteId int
-	Lang   string
-	Title  string
-	//Content   string
-	Active    int
-	Sort      int
-	CreatedBy int
 }
 
-func (b *CashSurplusRule) TableName() string {
+func (CashSurplusRule CashSurplusRule) TableName() string {
 	return "cash_surplus_rule"
 }
 
-func GetRules(CashSurplusRule *[]CashSurplusRule) (err error) {
-	if err = Config.DB.Find(CashSurplusRule).Error; err != nil {
+func (CashSurplusRule CashSurplusRule) GetRules() ([]Entities.CashSurplusRule, error) {
+	db, err := Config.GetDB()
+	defer db.Close()
+
+	if err != nil {
+		return nil, err
+	} else {
+		var cashSurplusRules []Entities.CashSurplusRule
+		db.Table("cash_surplus_rule").Select("*").Scan(&cashSurplusRules)
+		return cashSurplusRules, nil
+	}
+}
+
+func CreateRule(ctx *gin.Context) (err error) {
+	db, err := Config.GetDB()
+	defer db.Close()
+
+	if err != nil {
 		return err
+	} else {
+		var cashSurplusRules Entities.CashSurplusRule
+		ctx.BindJSON(cashSurplusRules)
+		db.Table("cash_surplus_rule").Select("*").Create(&cashSurplusRules)
+		return nil
 	}
 
-	return nil
+	//if err = Config.DB.Create(CashSurplusRule).Error; err != nil {
+	//	return err
+	//}
+	//return nil
 }
 
-func CreateRule(CashSurplusRule *CashSurplusRule) (err error) {
-	if err = Config.DB.Create(CashSurplusRule).Error; err != nil {
-		return err
+func (CashSurplusRule CashSurplusRule) GetRuleByID(id string) (Entities.CashSurplusRule, error) {
+	db, err := Config.GetDB()
+	defer db.Close()
+
+	if err != nil {
+		return Entities.CashSurplusRule{}, err
+	} else {
+		var cashSurplusRules Entities.CashSurplusRule
+		db.Table("cash_surplus_rule").Select("*").First(&cashSurplusRules, id)
+		return cashSurplusRules, nil
 	}
-	return nil
 }
 
-func GetRuleByID(CashSurplusRule *CashSurplusRule, id string) (err error) {
-	if err = Config.DB.Where("id = ?", id).First(CashSurplusRule).Error; err != nil {
-		return err
-	}
-	return nil
-}
-
-func UpdateRule(CashSurplusRule *CashSurplusRule, id string) (err error) {
-	fmt.Println(CashSurplusRule)
-	Config.DB.Save(CashSurplusRule)
-	return nil
-}
-
-func DeleteRule(CashSurplusRule *CashSurplusRule, id string) (err error) {
-	Config.DB.Where("id = ?", id).Delete(CashSurplusRule)
-	return nil
-}
+//
+//func UpdateRule(CashSurplusRule *CashSurplusRule, id string) (err error) {
+//	fmt.Println(CashSurplusRule)
+//	Config.DB.Save(CashSurplusRule)
+//	return nil
+//}
+//
+//func DeleteRule(CashSurplusRule *CashSurplusRule, id string) (err error) {
+//	Config.DB.Where("id = ?", id).Delete(CashSurplusRule)
+//	return nil
+//}

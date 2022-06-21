@@ -1,28 +1,26 @@
 package main
 
 import (
-	"Config"
 	"Models"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/jinzhu/gorm"
 )
 
-var err error
-
 func main() {
-	Config.DB, err = gorm.Open("mysql", Config.DbURL(Config.BuildDBConfig()))
-	if err != nil {
-		fmt.Println("Status:", err)
-	}
-	defer Config.DB.Close()
+	//Config.DB, err = gorm.Open("mysql", Config.DbURL(Config.BuildDBConfig()))
+	//if err != nil {
+	//	fmt.Println("Status:", err)
+	//}
+	//defer Config.DB.Close()
 
-	var CashSurplusRule []Models.CashSurplusRule
-	err := Models.GetRules(&CashSurplusRule)
+	var CashSurplusRule Models.CashSurplusRule
+	result, err := CashSurplusRule.GetRuleByID("3")
 	if err != nil {
 		return
 	}
-	//fmt.Printf("Data:%+v:", CashSurplusRule)
+
+	fmt.Printf("Data:%+v:", result)
+
 	//router := Router.SetupRouter()
 	//router.Run(":8888")
 }
