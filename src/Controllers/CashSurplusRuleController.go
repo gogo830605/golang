@@ -42,30 +42,29 @@ func GetRuleByID(ctx *gin.Context) {
 	}
 }
 
-//
-//func UpdateRule(ctx *gin.Context) {
-//	var CashSurplusRule Models.CashSurplusRule
-//	id := ctx.Params.ByName("id")
-//	err := Models.GetRuleByID(&CashSurplusRule, id)
-//	if err != nil {
-//		ctx.JSON(http.StatusNotFound, CashSurplusRule)
-//	}
-//	ctx.BindJSON(&CashSurplusRule)
-//	err = Models.UpdateRule(&CashSurplusRule, id)
-//	if err != nil {
-//		ctx.AbortWithStatus(http.StatusNotFound)
-//	} else {
-//		ctx.JSON(http.StatusOK, CashSurplusRule)
-//	}
-//}
-//
-//func DeleteRule(ctx *gin.Context) {
-//	var CashSurplusRule Models.CashSurplusRule
-//	id := ctx.Params.ByName("id")
-//	err := Models.DeleteRule(&CashSurplusRule, id)
-//	if err != nil {
-//		ctx.AbortWithStatus(http.StatusNotFound)
-//	} else {
-//		ctx.JSON(http.StatusOK, gin.H{"id" + id: "is deleted"})
-//	}
-//}
+func UpdateRule(ctx *gin.Context) {
+	var CashSurplusRule Models.CashSurplusRule
+	id := ctx.Params.ByName("id")
+	err := Models.GetRuleByID(&CashSurplusRule, id)
+	if err != nil {
+		ctx.JSON(http.StatusNotFound, CashSurplusRule)
+	}
+	ctx.BindJSON(&CashSurplusRule)
+	err = Models.UpdateRule(&CashSurplusRule, id)
+	if err != nil {
+		ctx.AbortWithStatus(http.StatusNotFound)
+	} else {
+		ctx.JSON(http.StatusOK, CashSurplusRule)
+	}
+}
+
+func DeleteRule(ctx *gin.Context) {
+	var CashSurplusRule Models.CashSurplusRule
+	id := ctx.Params.ByName("id")
+	err := Models.DeleteRule(&CashSurplusRule, id)
+	if err != nil {
+		ctx.AbortWithStatus(http.StatusNotFound)
+	} else {
+		ctx.JSON(http.StatusOK, gin.H{"id" + id: "is deleted"})
+	}
+}
